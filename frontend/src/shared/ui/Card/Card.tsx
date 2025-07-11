@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { twMerge } from "tailwind-merge";
 
 interface CardProps {
   title?: string;
@@ -17,7 +18,7 @@ interface CardProps {
 
 export const Card = ({ title, children, footer, className }: CardProps) => {
   return (
-    <CardCN className="border-border shadow-xs">
+    <CardCN className={twMerge("border-border shadow-xs", className)}>
       {title && (
         <CardHeader>
           <CardTitle>{title}</CardTitle>

@@ -1,6 +1,6 @@
 "use client";
 import { User } from "../model/user";
-import Avatar from "@/src/shared/ui/Avatar/Avatar";
+import { Avatar } from "@/src/shared/ui/Avatar/Avatar";
 
 export default function UserBadge({ user }: { user: User }) {
   return (
