@@ -1,1 +1,1 @@
-export { ManagementSection } from "./ManagementSection.tsx";
+export { ManagementSection } from "./ManagementSection";

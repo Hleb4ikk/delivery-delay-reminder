@@ -5,23 +5,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Carrier } from "@/types";
 
 interface SelectProps extends React.ComponentProps<typeof SelectCN> {
-  initialItem: { id: string; value: string };
-  items: {
-    id: string;
-    value: string;
-  }[];
+  triggerId?: string;
+  placeholder: string;
+  items: Carrier[];
 }
 
-export const Select = ({ initialItem, items, ...props }: SelectProps) => {
+export const Select = ({
+  placeholder,
+  triggerId,
+  items,
+  ...props
+}: SelectProps) => {
   return (
     <SelectCN {...props}>
-      <SelectTrigger>
-        <SelectValue placeholder={initialItem.value} />
+      <SelectTrigger className="w-full" id={triggerId}>
+        <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value={initialItem.id}>{initialItem.value}</SelectItem>
         {items.map((item, index) => (
           <SelectItem key={index} value={item.id}>
             {item.value}
