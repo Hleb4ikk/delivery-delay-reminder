@@ -1,9 +1,11 @@
+import { Header } from "@/components/layout/Header";
+import { UserProvider } from "@/context/UserContext/UserContext";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import AppProvider from "@/src/app/AppProvider";
-import { Header } from "@/src/widgets/Header";
+
 import "../styles/globals.css";
 import "../styles/variables.css";
+import { AppProvider } from "@/context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,12 +32,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AppProvider>
-          <Header />
-          <div className="grow">
-            <main className="mx-auto max-w-7xl p-3 h-full">{children}</main>
-          </div>
-        </AppProvider>
+        <div className="grow">
+          <AppProvider>
+            <Header />
+            <main className="mx-auto max-w-7xl py-10 px-3 h-full">
+              {children}
+            </main>
+          </AppProvider>
+        </div>
       </body>
     </html>
   );
