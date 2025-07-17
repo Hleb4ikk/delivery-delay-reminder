@@ -8,27 +8,27 @@ interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   loader: React.ReactNode;
   className?: string;
+  isLoading: boolean;
 }
 
 export const SubmitButton = ({
   children,
   loader,
   className,
+  isLoading,
   ...props
 }: SubmitButtonProps) => {
-  const [loading, setLoading] = useState(false);
-
   return (
     <PrimaryButton
-      onClick={() => setLoading(true)}
+      disabled={isLoading}
       className={twMerge(
-        `${loading && "opacity-80 cursor-not-allowed "}`,
+        `${isLoading && "opacity-80 cursor-not-allowed "}`,
         className
       )}
       type="submit"
       {...props}
     >
-      {loading && <div>{loader}</div>}
+      {isLoading && <div>{loader}</div>}
       {children}
     </PrimaryButton>
   );

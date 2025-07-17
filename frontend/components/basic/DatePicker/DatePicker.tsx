@@ -32,7 +32,7 @@ function isValidDate(date: Date | undefined) {
   return !isNaN(date.getTime());
 }
 
-export const DatePicker = ({ triggerId }: { triggerId: string }) => {
+export const DatePicker = ({ triggerName }: { triggerName: string }) => {
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = React.useState<Date | undefined>(
     new Date(Date.now())
@@ -44,9 +44,8 @@ export const DatePicker = ({ triggerId }: { triggerId: string }) => {
     <div className="flex flex-col gap-3">
       <div className="relative flex gap-2">
         <Input
-          id={triggerId}
+          name={triggerName}
           value={value}
-          placeholder="June 01, 2025"
           className="bg-background pr-10"
           onChange={(e) => {
             const date = new Date(e.target.value);

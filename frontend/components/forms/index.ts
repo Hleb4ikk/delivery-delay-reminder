@@ -1,1 +1,1 @@
-export { AddOrderForm } from "./AddOrderForm";
+export { AddOrderForm } from "./AddOrderForm/AddOrderForm";

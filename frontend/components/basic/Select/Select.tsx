@@ -8,25 +8,20 @@ import {
 import { Carrier } from "@/types";
 
 interface SelectProps extends React.ComponentProps<typeof SelectCN> {
-  triggerId?: string;
+  name?: string;
   placeholder: string;
   items: Carrier[];
 }
 
-export const Select = ({
-  placeholder,
-  triggerId,
-  items,
-  ...props
-}: SelectProps) => {
+export const Select = ({ placeholder, name, items, ...props }: SelectProps) => {
   return (
-    <SelectCN {...props}>
-      <SelectTrigger className="w-full" id={triggerId}>
+    <SelectCN name={name} {...props}>
+      <SelectTrigger className="w-full">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
         {items.map((item, index) => (
-          <SelectItem key={index} value={item.id}>
+          <SelectItem key={index} value={item.value}>
             {item.value}
           </SelectItem>
         ))}
