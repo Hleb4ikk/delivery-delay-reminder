@@ -1,0 +1,22 @@
+FROM node:20-alpine AS dev
+
+WORKDIR /app
+COPY ./package*.json ./
+# Копируем только package.json и lock-файл
+COPY ./frontend/package*.json ./frontend/
+
+# Устанавливаем зависимости
+RUN npm install --prefix ./frontend
+
+# Копируем весь frontend
+COPY ./frontend ./frontend/
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev:frontend"]
+
+# build
+# docker build -f docker/Dockerfile.dev . -t ddr
+
+# run
+# docker run -p 3000:3000 ddr
