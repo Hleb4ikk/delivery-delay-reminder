@@ -46,6 +46,7 @@ export const ManagementSection = () => {
                 <SubmitButton
                   loader={<LoaderCircle className="animate-spin" />}
                   form="addOrderForm"
+                  isLoading={false}
                 >
                   Send
                 </SubmitButton>

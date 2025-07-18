@@ -2,13 +2,11 @@ FROM node:20-alpine AS dev
 
 WORKDIR /app
 COPY ./package*.json ./
-# Копируем только package.json и lock-файл
+
 COPY ./frontend/package*.json ./frontend/
 
-# Устанавливаем зависимости
 RUN npm install --prefix ./frontend
 
-# Копируем весь frontend
 COPY ./frontend ./frontend/
 
 EXPOSE 3000

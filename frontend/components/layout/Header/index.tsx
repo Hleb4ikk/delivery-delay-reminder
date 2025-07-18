@@ -1,9 +1,18 @@
+"use client";
+
 import { Truck } from "lucide-react";
 
 import NavigationMenu from "./NavigationMenu/NavigationMenu";
 import UserDropdownMenu from "./UserDropdownMenu/UserDropdownMenu";
 
+import { PrimaryButton } from "@/components/basic/Button";
+
+import { AuthChoice } from "@/components/auth/AuthChoice";
+import { useUser } from "@/context";
+
 export const Header = () => {
+  const user = useUser();
+
   return (
     <header className="bg-white  border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4">
@@ -19,7 +28,11 @@ export const Header = () => {
             </div>
             <NavigationMenu />
           </div>
-          <UserDropdownMenu />
+          {!user.user ? (
+            <AuthChoice trigger={<PrimaryButton>Sign In</PrimaryButton>} />
+          ) : (
+            <UserDropdownMenu />
+          )}
         </div>
       </div>
     </header>
