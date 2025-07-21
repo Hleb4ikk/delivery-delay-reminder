@@ -1,13 +1,6 @@
-import { CarrierEnum } from '../enums/carrier.enum';
+import { CarrierEnum } from '../../orders/enums/carrier.enum';
 
-import {
-  pgTable,
-  serial,
-  varchar,
-  numeric,
-  timestamp,
-  pgEnum,
-} from 'drizzle-orm/pg-core';
+import { pgTable, varchar, timestamp, pgEnum, uuid } from 'drizzle-orm/pg-core';
 
 export const carrierEnum = pgEnum(
   'carrierEnum',
@@ -15,7 +8,7 @@ export const carrierEnum = pgEnum(
 );
 
 export const orders = pgTable('orders', {
-  id: serial('id').primaryKey().unique(),
+  id: varchar('id', { length: 20 }).primaryKey(),
   customerName: varchar('customer_name', { length: 255 }).notNull(),
   customerEmail: varchar('customer_email', { length: 255 }).notNull(),
   deliveryAddress: varchar('delivery_address', { length: 255 }).notNull(),

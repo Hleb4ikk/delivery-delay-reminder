@@ -1,4 +1,3 @@
-import { Injectable } from '@nestjs/common';
 import {
   IsDate,
   IsEmail,
@@ -8,7 +7,6 @@ import {
 } from 'class-validator';
 import { CarrierEnum } from '../enums/carrier.enum';
 
-@Injectable()
 export class CreateOrderDto {
   @IsNotEmpty({ message: 'Customer name is required' })
   customerName: string;
