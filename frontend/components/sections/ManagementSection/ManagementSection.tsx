@@ -43,13 +43,6 @@ export const ManagementSection = () => {
                 </AlertDialogCancel>
 
                 <AddOrderForm id="addOrderForm" />
-                <SubmitButton
-                  loader={<LoaderCircle className="animate-spin" />}
-                  form="addOrderForm"
-                  isLoading={false}
-                >
-                  Send
-                </SubmitButton>
               </AlertDialogContent>
             </AlertDialog>
           </div>

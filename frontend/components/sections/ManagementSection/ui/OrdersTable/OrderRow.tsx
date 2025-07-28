@@ -4,12 +4,11 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
 import { getOrderStageById } from "@/lib/orderStages";
 import { orderStages } from "@/constants";
-import { orderStatuses } from "@/constants";
-
-import clsx from "clsx";
 
 export const OrderRow = ({ order }: { order: Order }) => {
-  const { id, emoji, status } = getOrderStageById(order.currentStage);
+  const { id, emoji, status } = getOrderStageById(
+    orderStages[order.currentStage].id
+  );
 
   return (
     <TableRow>
@@ -23,13 +22,19 @@ export const OrderRow = ({ order }: { order: Order }) => {
         {status}
       </TableCell>
       <TableCell className="flex flex-col gap-1">
-        <Progress value={(id / orderStages.length) * 100} />
+        <Progress
+          value={
+            (orderStages[order.currentStage].id /
+              Object.values(orderStages).length) *
+            100
+          }
+        />
         <p className="text-gray-500 text-xs">
-          Stage {id} of {orderStages.length}
+          Stage {id} of {Object.values(orderStages).length}
         </p>
       </TableCell>
-      <TableCell>{order.estimatedDeliveryDate}</TableCell>
-      <TableCell>
+      <TableCell>{new Date(order.estDeliveryDate).toDateString()}</TableCell>
+      {/* <TableCell>
         <div
           className={clsx(
             "border-1 rounded-xl px-2 py-1 text-center",
@@ -40,8 +45,8 @@ export const OrderRow = ({ order }: { order: Order }) => {
         >
           {orderStatuses[order.status].status}
         </div>
-      </TableCell>
-      <TableCell>pipec </TableCell>
+      </TableCell> */}
+      <TableCell>actions</TableCell>
     </TableRow>
   );
 };

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -6,75 +8,52 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { Order, OrderStatus } from "@/types";
+import { Order } from "@/types";
 import { OrderRow } from "./OrderRow";
+import { useEffect, useState } from "react";
 
 export const OrdersTable = () => {
+  const [orders, setOrders] = useState<Order[] | null>(null);
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    async function fetchOrders() {
+      const response = await fetch(`http://localhost:8080/orders?page=${page}`);
+
+      const { code, data } = await response.json();
+      console.log(data);
+      setOrders(data);
+    }
+    fetchOrders();
+  }, []);
+
   const heads = [
     "Order ID",
     "Customer",
     "Current Stage",
     "Progress",
     "Est. Delivery",
-    "Status",
+    // "Status",
     "Actions",
   ];
 
-  const orders: Order[] = [
-    {
-      id: "OR-2025-001",
-      customerName: "John Smith",
-      deliveryAddress: "123 Main St, New York, NY 10001",
-      currentStage: 1,
-      estimatedDeliveryDate: new Date(2025, 6, 15).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      }),
-      status: OrderStatus.ON_TIME,
-    },
-    {
-      id: "OR-2025-002",
-      customerName: "Kate Smith",
-      deliveryAddress: "123 Main St, New York, NY 10001",
-      currentStage: 1,
-      estimatedDeliveryDate: new Date(2025, 6, 15).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      }),
-      status: OrderStatus.CRITICAL,
-    },
-    {
-      id: "OR-2025-003",
-      customerName: "Lisa Smith",
-      deliveryAddress: "123 Main St, New York, NY 10001",
-      currentStage: 1,
-      estimatedDeliveryDate: new Date(2025, 6, 15).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      }),
-      status: OrderStatus.DELAYED,
-    },
-  ];
-
-  return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          {heads.map((head) => (
-            <TableHead className="text-gray-500" key={head}>
-              {head}
-            </TableHead>
+  if (orders)
+    return (
+      <Table>
+        <TableHeader>
+          <TableRow>
+            {heads.map((head) => (
+              <TableHead className="text-gray-500" key={head}>
+                {head}
+              </TableHead>
+            ))}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {orders.map((order) => (
+            <OrderRow order={order} key={order.id} />
           ))}
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {orders.map((order) => (
-          <OrderRow order={order} key={order.id} />
-        ))}
-      </TableBody>
-    </Table>
-  );
+        </TableBody>
+      </Table>
+    );
 };

@@ -1,14 +1,8 @@
 import { Module } from '@nestjs/common';
-import { OrdersModule } from './orders/orders.module';
-import { ConfigModule } from '@nestjs/config';
+import { OrdersModule } from './modules/orders/orders.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-    OrdersModule,
-  ],
+  imports: [OrdersModule],
   controllers: [],
   providers: [],
 })

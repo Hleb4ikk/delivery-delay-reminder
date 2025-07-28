@@ -5,7 +5,7 @@ import clsx from "clsx";
 export const StatisticsSection = () => {
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 xl:grid-cols-5">
-      {orderStages.map((stage) => (
+      {Object.values(orderStages).map((stage) => (
         <Card key={stage.id}>
           <div className="flex items-center justify-between gap-2">
             <div className="flex flex-col gap-4">

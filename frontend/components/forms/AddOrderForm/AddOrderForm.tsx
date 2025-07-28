@@ -16,11 +16,32 @@ import { validateForm } from "../validation";
 import { FormErrors } from "../types";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { LoaderCircle } from "lucide-react";
+import { SubmitButton } from "@/components/basic/Button";
+
+async function addOrder(order: z.infer<typeof addOrderSchema>) {
+  const response = await fetch("http://localhost:8080/orders", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(order),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create order");
+  }
+
+  return await response.json();
+}
 
 export const AddOrderForm = ({ id }: { id: string }) => {
   const [messages, setMessages] = useState<FormErrors<
     z.infer<typeof addOrderSchema>
   > | null>(null);
+
+  const router = useRouter();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,7 +54,10 @@ export const AddOrderForm = ({ id }: { id: string }) => {
     if (!result.success) {
       setMessages(result.errors);
     } else {
+      addOrder(result.data);
+
       setMessages(null);
+      router.refresh();
     }
   }
 
@@ -107,6 +131,13 @@ export const AddOrderForm = ({ id }: { id: string }) => {
           placeholder="Enter package description (optional)"
         />
       </div>
+      <SubmitButton
+        loader={<LoaderCircle className="animate-spin" />}
+        form="addOrderForm"
+        isLoading={false}
+      >
+        Send
+      </SubmitButton>
     </form>
   );
 };
