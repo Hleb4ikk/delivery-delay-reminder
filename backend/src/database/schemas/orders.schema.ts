@@ -11,6 +11,8 @@ import {
 
 import { relations } from 'drizzle-orm';
 import { StageEnum } from 'src/modules/orders/enums';
+import { users } from './users.schema';
+import { stageSystems } from './stage-systems.schema';
 
 export const carrierEnum = pgEnum(
   'carrierEnum',
@@ -31,6 +33,19 @@ export const orders = pgTable('orders', {
   estDeliveryDate: timestamp('est_delivery_date').notNull(),
   carrier: carrierEnum('carrier').notNull(),
   currentStage: stageEnum('current_stage').default(StageEnum.PREPARED),
+  userId: integer('user_id').references(() => users.id).notNull(),
+  stageSystemId: integer('stage_system_id').references(() => stageSystems.id),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });
+
+export const ordersRelations = relations(orders, ({ one }) => ({
+  user: one(users, {
+    fields: [orders.userId],
+    references: [users.id],
+  }),
+  stageSystem: one(stageSystems, {
+    fields: [orders.stageSystemId],
+    references: [stageSystems.id],
+  }),
+}));
