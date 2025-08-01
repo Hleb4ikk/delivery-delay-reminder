@@ -12,7 +12,6 @@ export class ValidationExceptionFilter implements ExceptionFilter {
     const code = exception.getStatus();
     const message = exception.getResponse();
     const errors = exception.cause as ValidationErrors;
-
     response.status(code).json({ code, message, ...errors });
   }
 }

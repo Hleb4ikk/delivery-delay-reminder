@@ -12,6 +12,7 @@ import {
   NotFoundException,
   Query,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 
@@ -25,9 +26,11 @@ import { ParsePositiveIntPipe } from 'src/common/pipes/parse-positive-int-pipe';
 
 import { ValidationExceptionFilter } from 'src/common/filters/ValidationException.filter';
 import { updateOrderSchema } from './schemas/update-order.schema';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @UseFilters(ValidationExceptionFilter)
 @Controller({ path: 'orders', version: '1' })
+@UseGuards(JwtAuthGuard)
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
@@ -35,7 +38,6 @@ export class OrdersController {
   @HttpCode(HttpStatus.OK)
   async findOrders(@Query('page', ParsePositiveIntPipe) page: number) {
     const orders = await this.ordersService.findOrders(page);
-
     return { code: HttpStatus.OK, data: orders };
   }
 

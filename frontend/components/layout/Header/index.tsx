@@ -7,11 +7,18 @@ import UserDropdownMenu from "./UserDropdownMenu/UserDropdownMenu";
 
 import { PrimaryButton } from "@/components/basic/Button";
 
-import { AuthChoice } from "@/components/auth/AuthChoice";
+import { AuthForm } from "@/components/auth/AuthForm";
+import { getSessionUser } from "@/actions/user";
+import { useEffect } from "react";
 import { useUser } from "@/context";
 
 export const Header = () => {
-  const user = useUser();
+  const { user, setUser } = useUser();
+  useEffect(() => {
+    getSessionUser().then((user) => {
+      setUser(user);
+    });
+  }, []);
 
   return (
     <header className="bg-white  border-b border-slate-200">
@@ -28,8 +35,8 @@ export const Header = () => {
             </div>
             <NavigationMenu />
           </div>
-          {!user.user ? (
-            <AuthChoice trigger={<PrimaryButton>Sign In</PrimaryButton>} />
+          {!user ? (
+            <AuthForm trigger={<PrimaryButton>Sign In</PrimaryButton>} />
           ) : (
             <UserDropdownMenu />
           )}

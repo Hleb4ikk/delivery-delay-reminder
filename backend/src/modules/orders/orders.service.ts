@@ -20,12 +20,7 @@ export class OrdersService {
     return (await db.select().from(orders).where(eq(orders.id, id)))[0];
   }
 
-  async create(createOrderDto: CreateOrderDto) {
-    return await db
-      .insert(orders)
-      .values({ ...createOrderDto })
-      .returning({ orderId: orders.id });
-  }
+  async create(createOrderDto: CreateOrderDto) {}
 
   async update(id: number, updateOrderDto: UpdateOrderDto) {
     return await db

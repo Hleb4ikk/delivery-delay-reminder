@@ -8,7 +8,7 @@ export default function NavigationMenu() {
   return (
     <NavigationMenuCN>
       <NavigationMenuList>
-        <NavigationMenuLink className="font-[600]" href="/">
+        <NavigationMenuLink className="font-[600]" href="/dashboard">
           Dashboard
         </NavigationMenuLink>
       </NavigationMenuList>
